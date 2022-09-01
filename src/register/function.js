@@ -24,9 +24,18 @@ export const register = () => {
     addons.add(PANEL_ID, {
       type: types.PANEL,
       title: 'Root attribute',
-      render: ({active}) => (
-        <RootAttributePanel key={PANEL_ID} api={api} active={active} />
-      )
+      render: ({active}) => {
+        const paramsArray = api.getParameters(api.getCurrentStoryData().id, PARAM_KEY);
+
+        return paramsArray.map((params) =>
+          (<RootAttributePanel
+            key={params.attribute}
+            params={params}
+            active={active}
+            api={api}
+          />)
+        );
+      }
     });
   });
 };
