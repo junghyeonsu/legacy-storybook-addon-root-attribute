@@ -62,7 +62,7 @@ export default class RootAttributePanel extends React.Component {
         return arr;
       }, {});
 
-      const options = _merge(DEFAULT_VALUES, params);
+      const options = _merge(DEFAULT_VALUES, ...params);
       const statesList = [options.defaultState].concat(options.states);
 
       let mergedList = statesList.map((res) => {
