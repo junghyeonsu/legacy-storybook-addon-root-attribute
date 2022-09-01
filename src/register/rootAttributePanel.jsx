@@ -1,7 +1,8 @@
+/* eslint-disable no-console */
 import React from 'react';
 import _merge from 'lodash/merge';
 import _uniq from 'lodash/uniq';
-import {EVENTS, PARAM_KEY} from './constants';
+import {EVENTS} from './constants';
 import {styled} from '@storybook/theming';
 import {STORY_RENDERED} from '@storybook/core-events';
 import {
@@ -53,8 +54,7 @@ export default class RootAttributePanel extends React.Component {
 
   onStoryChange(id) {
     const {currentStoryId, collectedStates} = this.state;
-    const {api} = this.props;
-    const params = api.getParameters(id, PARAM_KEY);
+    const {params} = this.props;
 
     if (params && id !== currentStoryId) {
       const existingNames = collectedStates.reduce((arr, res) => {
@@ -105,7 +105,9 @@ export default class RootAttributePanel extends React.Component {
   }
 
   onSelected(selectedName) {
+    console.log('onSelected selectedName', selectedName);
     const {collectedStates} = this.state;
+    console.log('onSelected collectedStates', collectedStates);
     const newStates = collectedStates.map(({name, value}) => {
       if (selectedName === name) {
         return {
@@ -153,6 +155,9 @@ export default class RootAttributePanel extends React.Component {
     const {api} = this.props;
     const {currentOptions: {root, attribute}, collectedStates} = this.state;
     const currentState = collectedStates.find((st) => !!st.selected);
+
+    // eslint-disable-next-line no-console
+    console.log('emit', root, attribute, currentState);
 
     api.emit(EVENTS.UPDATE, {
       root,
@@ -226,7 +231,7 @@ export default class RootAttributePanel extends React.Component {
       return null;
     }
 
-    const {collectedStates} = this.state;
+    const {collectedStates, currentOptions} = this.state;
 
     const [isInvalid, errorMessage] = this.invalidOptions(collectedStates);
     if (isInvalid) {
@@ -237,6 +242,7 @@ export default class RootAttributePanel extends React.Component {
 
     return (
       <div>
+        <span>{currentOptions.attribute}</span>
         {collectedStates && collectedStates.map(({name, selected}) => (
           <SwitchButton
             key={name}

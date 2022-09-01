@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import RootAttributePanel from './rootAttributePanel';
 import {addons, types} from '@storybook/addons';
@@ -24,9 +25,20 @@ export const register = () => {
     addons.add(PANEL_ID, {
       type: types.PANEL,
       title: 'Root attribute',
-      render: ({active}) => (
-        <RootAttributePanel key={PANEL_ID} api={api} active={active} />
-      )
+      render: ({active}) => {
+        const id = api.getCurrentStoryData()?.id;
+
+        if (!id) return null;
+
+        const paramsArray = api.getParameters(id, PARAM_KEY);
+        return paramsArray.map((params) =>
+          (<RootAttributePanel
+            key={params.attribute}
+            params={params}
+            api={api}
+            active={active}
+          />));
+      }
     });
   });
 };
