@@ -64,6 +64,11 @@ export default class RootAttributePanel extends React.Component {
       const options = _merge(DEFAULT_VALUES, params);
       const statesList = [options.defaultState].concat(options.states);
 
+      // eslint-disable-next-line no-console
+      console.log('options', options);
+      // eslint-disable-next-line no-console
+      console.log('statesList', statesList);
+
       let mergedList = statesList.map((res) => {
         const existingItem = existingNames[res.name];
 

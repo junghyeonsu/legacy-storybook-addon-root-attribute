@@ -27,6 +27,9 @@ export const register = () => {
       render: ({active}) => {
         const paramsArray = api.getParameters(api.getCurrentStoryData().id, PARAM_KEY);
 
+        // eslint-disable-next-line no-console
+        console.log('paramsArray', paramsArray);
+
         return paramsArray.map((params) =>
           (<RootAttributePanel
             key={params.attribute}

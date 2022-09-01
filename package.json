@@ -1,6 +1,6 @@
 {
   "name": "storybook-addon-root-attributes",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Storybook Addon Root Attribute to switch html or body attribute at runtime for your story",
   "main": "index.js",
   "scripts": {
