@@ -1,7 +1,7 @@
 import React from 'react';
 import _merge from 'lodash/merge';
 import _uniq from 'lodash/uniq';
-import {EVENTS} from './constants';
+import {EVENTS, PARAM_KEY} from './constants';
 import {styled} from '@storybook/theming';
 import {STORY_RENDERED} from '@storybook/core-events';
 import {
@@ -53,7 +53,8 @@ export default class RootAttributePanel extends React.Component {
 
   onStoryChange(id) {
     const {currentStoryId, collectedStates} = this.state;
-    const {params} = this.props;
+    const {api} = this.props;
+    const params = api.getParameters(id, PARAM_KEY);
 
     if (params && id !== currentStoryId) {
       const existingNames = collectedStates.reduce((arr, res) => {
@@ -63,11 +64,6 @@ export default class RootAttributePanel extends React.Component {
 
       const options = _merge(DEFAULT_VALUES, params);
       const statesList = [options.defaultState].concat(options.states);
-
-      // eslint-disable-next-line no-console
-      console.log('options', options);
-      // eslint-disable-next-line no-console
-      console.log('statesList', statesList);
 
       let mergedList = statesList.map((res) => {
         const existingItem = existingNames[res.name];
